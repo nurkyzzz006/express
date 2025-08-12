@@ -17,6 +17,9 @@ const buildServer = () => {
             message: "Hello World!",
         });
     });
+    server.post("/", (req, res) => {
+        res.status(200).send({});
+    });
     server.use("/api/v1", routes_1.default);
     return server;
 };

@@ -18,7 +18,7 @@ const getAllTodo = async (req, res) => {
 };
 const addTodo = async (req, res) => {
     try {
-        const { title, description } = req.body;
+        const { title, description, name } = req.body;
         if (!title) {
             res.status(400).send({
                 success: false,
@@ -46,7 +46,28 @@ const addTodo = async (req, res) => {
         });
     }
 };
+const deleteTodo = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const todoIndex = data.findIndex((todo) => todo.id === +id);
+        data.splice(todoIndex, 1);
+        res.status(200).send({
+            status: true,
+            data: {
+                id,
+            },
+        });
+    }
+    catch (e) {
+        console.error(`error in deleteTodo ${e}`);
+        res.status(500).send({
+            succes: false,
+            message: `Error in deleteTodo ${e}`,
+        });
+    }
+};
 exports.default = {
     getAllTodo,
     addTodo,
+    deleteTodo,
 };
